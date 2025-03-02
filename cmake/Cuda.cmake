@@ -11,11 +11,11 @@ macro(OGL_target_link_cuda target)
   # optional named CUDA_WARNINGS
   set(oneValueArgs CUDA_WARNINGS)
   cmake_parse_arguments(
-    _cuda_args
-    ""
-    "${oneValueArgs}"
-    ""
-    ${ARGN})
+          _cuda_args
+          ""
+          "${oneValueArgs}"
+          ""
+          ${ARGN})
 
   # add CUDA to cmake language
   enable_language(CUDA)
@@ -41,8 +41,8 @@ macro(OGL_target_link_cuda target)
 
   if(WIN32 AND "$ENV{VSCMD_VER}" STREQUAL "")
     message(
-      WARNING
-        "Compiling CUDA on Windows outside the Visual Studio Command prompt or without running `vcvarsall.bat x64` probably fails"
+            WARNING
+            "Compiling CUDA on Windows outside the Visual Studio Command prompt or without running `vcvarsall.bat x64` probably fails"
     )
   endif()
 endmacro()
