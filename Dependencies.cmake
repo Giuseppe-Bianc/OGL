@@ -52,12 +52,5 @@ function(OGL_setup_dependencies)
     if (NOT TARGET CLI11::CLI11)
         CPMAddPackage("gh:CLIUtils/CLI11@2.4.2")
     endif ()
-    if (NOT TARGET ftxui::screen)
-        cpmaddpackage("gh:ArthurSonzogni/FTXUI@5.0.0")
-    endif ()
-
-    if (NOT TARGET tools::tools)
-        cpmaddpackage("gh:lefticus/tools#update_build_system")
-    endif ()
 
 endfunction()
