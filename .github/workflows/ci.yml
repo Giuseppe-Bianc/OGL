@@ -169,7 +169,9 @@ jobs:
           opencppcoverage: true
       - name: Install Wayland dependencies (Ubuntu)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y wayland-protocols
+        run: |
+                  sudo apt update
+                  sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libwayland-dev libxkbcommon-dev
 
 
       - name: Update Gcov with pipx
