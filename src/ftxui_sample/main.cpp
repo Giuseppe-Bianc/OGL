@@ -14,7 +14,6 @@
 // the source template at `configured_files/config.hpp.in`.
 #include <internal_use_only/config.hpp>
 
-
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, const char **argv) {
     try {
