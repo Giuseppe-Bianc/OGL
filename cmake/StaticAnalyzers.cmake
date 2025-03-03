@@ -1,6 +1,6 @@
 macro(OGL_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
     find_program(CPPCHECK cppcheck)
-    if(CPPCHECK)
+    if (CPPCHECK)
 
         if (CMAKE_GENERATOR MATCHES ".*Visual Studio.*")
             set(CPPCHECK_TEMPLATE "vs")

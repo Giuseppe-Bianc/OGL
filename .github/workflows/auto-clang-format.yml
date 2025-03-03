@@ -30,10 +30,21 @@ jobs:
           clangFormatVersion: 17
           inplace: true
 
-      - uses: EndBug/add-and-commit@v4
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9.1.4
         with:
           author_name: Clang Robot
           author_email: robot@example.com
-          message: ':art: Committing clang-format changes'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            :art: Applied clang-format to source code (auto-formatting)
+            - Updated .h, .cpp, and .hpp files to conform with the style guide.
+            - Changes include:
+              - Indentation adjustments
+              - Spacing improvements
+              - Alignment enhancements
+              - Consistency in formatting across files
+              - Removal of trailing whitespace
+          push: true
+          default_author: github_actor
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

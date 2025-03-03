@@ -5,12 +5,12 @@
 [![CodeQL](https://github.com/Giuseppe-Bianc/OGL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Giuseppe-Bianc/OGL/actions/workflows/codeql-analysis.yml)
 
 ## About OGL
-OpenGL and  c++20
 
+OpenGL and c++20
 
 ## More Details
 
- * [Dependency Setup](README_dependencies.md)
- * [Building Details](README_building.md)
- * [Troubleshooting](README_troubleshooting.md)
- * [Docker](README_docker.md)
+* [Dependency Setup](README_dependencies.md)
+* [Building Details](README_building.md)
+* [Troubleshooting](README_troubleshooting.md)
+* [Docker](README_docker.md)
