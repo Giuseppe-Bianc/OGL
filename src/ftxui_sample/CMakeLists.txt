@@ -1,5 +1,7 @@
 add_executable(ogl main.cpp)
 
+find_package(OpenGL REQUIRED)
+
 target_link_libraries(
         ogl
         PRIVATE OGL::OGL_options
@@ -12,6 +14,7 @@ target_link_system_libraries(
         fmt::fmt
         spdlog::spdlog
         glm::glm
+        OpenGL::GL
         glfw)
 
 target_include_directories(ogl PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
