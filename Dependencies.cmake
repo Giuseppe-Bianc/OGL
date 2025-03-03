@@ -53,4 +53,16 @@ function(OGL_setup_dependencies)
         CPMAddPackage("gh:CLIUtils/CLI11@2.4.2")
     endif ()
 
+    if(NOT TARGET glfw)
+        CPMAddPackage(
+                NAME glfw
+                GIT_REPOSITORY https://github.com/glfw/glfw.git
+                GIT_TAG master # Use "master" for the latest version
+                OPTIONS
+                "GLFW_BUILD_EXAMPLES OFF"
+                "GLFW_BUILD_TESTS OFF"
+                "GLFW_BUILD_DOCS OFF"
+        )
+    endif()
+
 endfunction()

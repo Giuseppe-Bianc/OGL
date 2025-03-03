@@ -1,4 +1,6 @@
-// NOLINTBEGIN(*-include-cleaner)
+// clang-format off
+// NOLINTBEGIN(*-include-cleaner, *-use-anonymous-namespace, *-easily-swappable-parameters, *-implicit-bool-conversion, *-init-variables)
+// clang-format on
 #include <array>
 #include <functional>
 #include <iostream>
@@ -12,6 +14,8 @@
 // This file will be generated automatically when cur_you run the CMake
 // configuration step. It creates a namespace called `OGL`. You can modify
 // the source template at `configured_files/config.hpp.in`.
+#include "GLFW/glfw3.h"
+
 #include <internal_use_only/config.hpp>
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
@@ -27,8 +31,11 @@ int main(int argc, const char **argv) {
             fmt::print("{}\n", OGL::cmake::project_version);
             return EXIT_SUCCESS;
         }
+        fmt::print("{}", glfwGetVersionString());
 
     } catch(const std::exception &e) { spdlog::error("Unhandled exception in main: {}", e.what()); }
 }
 
-// NOLINTEND(*-include-cleaner)
+// clang-format off
+// NOLINTEND(*-include-cleaner, *-use-anonymous-namespace, *-easily-swappable-parameters, *-implicit-bool-conversion, *-init-variables)
+// clang-format on

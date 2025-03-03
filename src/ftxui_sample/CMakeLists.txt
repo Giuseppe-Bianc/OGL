@@ -1,15 +1,17 @@
-add_executable(intro main.cpp)
+add_executable(ogl main.cpp)
 
 target_link_libraries(
-        intro
+        ogl
         PRIVATE OGL::OGL_options
         OGL::OGL_warnings)
 
 target_link_system_libraries(
-        intro
+        ogl
         PRIVATE
         CLI11::CLI11
         fmt::fmt
-        spdlog::spdlog)
+        spdlog::spdlog
+        glm::glm
+        glfw)
 
-target_include_directories(intro PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_include_directories(ogl PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
