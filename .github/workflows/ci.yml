@@ -167,6 +167,10 @@ jobs:
 
           gcovr: true
           opencppcoverage: true
+      - name: Install Wayland dependencies (Ubuntu)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y wayland-protocols
+
 
       - name: Update Gcov with pipx
         run: |
