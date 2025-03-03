@@ -1,4 +1,4 @@
-#include <OGL/sample_library.hpp>
+#include <OGL/ogl_lib.hpp>
 
 int factorial(int input) noexcept {
     int result = 1;

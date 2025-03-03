@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <OGL/sample_library.hpp>
+#include <OGL/ogl_lib.hpp>
 
 TEST_CASE("Factorials are computed", "[factorial]") {
     REQUIRE(factorial(0) == 1);
