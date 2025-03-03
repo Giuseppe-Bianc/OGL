@@ -1,4 +1,8 @@
-add_executable(ogl main.cpp)
+add_executable(ogl main.cpp
+        App.cpp
+        App.hpp
+        Window.cpp
+        Window.hpp)
 
 find_package(OpenGL REQUIRED)
 
@@ -14,6 +18,7 @@ target_link_system_libraries(
         fmt::fmt
         spdlog::spdlog
         glm::glm
+        OGL::glad
         OpenGL::GL
         glfw)
 

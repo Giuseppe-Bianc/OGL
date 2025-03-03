@@ -57,7 +57,7 @@ function(OGL_setup_dependencies)
         CPMAddPackage(
                 NAME glfw
                 GIT_REPOSITORY https://github.com/glfw/glfw.git
-                GIT_TAG master # Use "master" for the latest version
+                GIT_TAG 3.4 # Use "master" for the latest version
                 OPTIONS
                 "GLFW_BUILD_EXAMPLES OFF"
                 "GLFW_BUILD_TESTS OFF"
