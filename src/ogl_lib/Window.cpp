@@ -3,22 +3,18 @@
  * Copyright (c) 2025 All rights reserved.
  */
 
-#include "Window.hpp"
-
-#include "spdlog/spdlog.h"
-
-#include <stdexcept>
+#include "OGL/Window.hpp"
 [[nodiscard]] static constexpr auto calcolaCentro(const int &width, const int &w) noexcept { return (width - w) / 2; }
 #define CALC_CENTRO(width, w) calcolaCentro(width, w)
 
-void errorCallback(int error, const char *description) { spdlog::info("GLFW Error ({0}): {1}", error, description); }
+void errorCallback(int error, const char *description) { LINFO("GLFW Error ({0}): {1}", error, description); }
 
 void keyCallback(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
     switch(key) {  // NOLINT(*-multiway-paths-covered)
     case GLFW_KEY_ESCAPE:
         if(action == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, GLFW_TRUE);
-            spdlog::info("Escape key pressed, closing window.");
+            LINFO("Escape key pressed, closing window.");
         }
         break;
     [[likely]] default:
@@ -65,30 +61,31 @@ void Window::setHints() const {
 }
 
 void Window::initializeGLFW() {
+    vnd::AutoTimer timer("glfw setup");
     if(!glfwInit()) {
-        spdlog::info("Failed to initialize GLFW");
+        LCRITICAL("Failed to initialize GLFW");
         throw std::runtime_error("Failed to initialize GLFW.");
     }
     glfwSetErrorCallback(errorCallback);
 }
 
 std::string Window::formatMode(const GLFWvidmode *mode) const {
-    return fmt::format("({}x{}, Bits rgb{}{}{}, RR:{}Hz)", mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits,
+    return FORMAT("({}x{}, Bits rgb{}{}{}, RR:{}Hz)", mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits,
                        mode->refreshRate);
 }
 
 void Window::centerWindow() {
-    // vnd::Timer monitort("get primary Monitor");
+    vnd::Timer monitort("get primary Monitor");
     GLFWmonitor *primaryMonitor = glfwGetPrimaryMonitor();
     if(!primaryMonitor) { throw std::runtime_error("Failed to get the primary monitor."); }
-    // LINFO("{}", monitort);
+    LINFO("{}", monitort);
 
-    // vnd::Timer modet("get mode");
+    vnd::Timer modet("get mode");
     const GLFWvidmode *mode = glfwGetVideoMode(primaryMonitor);
     if(!mode) { throw std::runtime_error("Failed to get the video mode of the primary monitor."); }
-    // LINFO("{}", modet);
+    LINFO("{}", modet);
 
-    // vnd::Timer crepositiont("calculating for reposition");
+    vnd::Timer crepositiont("calculating for reposition");
     const int monitorWidth = mode->width;
     const int monitorHeight = mode->height;
     int windowWidth;
@@ -96,9 +93,9 @@ void Window::centerWindow() {
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
     auto centerX = CALC_CENTRO(monitorWidth, windowWidth);
     auto centerY = CALC_CENTRO(monitorHeight, windowHeight);
-    // LINFO("{}", crepositiont);
+    LINFO("{}", crepositiont);
 
-    // vnd::Timer wrepositiont("window reposition");
+    vnd::Timer wrepositiont("window reposition");
     glfwSetWindowPos(window, centerX, centerY);
     int posX = 0;
     int posY = 0;
@@ -111,19 +108,19 @@ void Window::centerWindow() {
     float yScale;
     int monitorPhysicalWidth;
     int monitorPhysicalHeight;
-    // vnd::Timer tmonitorinfo("get monitor info");
+    vnd::Timer tmonitorinfo("get monitor info");
     glfwGetMonitorPos(primaryMonitor, &xPos, &yPos);
     glfwGetMonitorContentScale(primaryMonitor, &xScale, &yScale);
     glfwGetMonitorPhysicalSize(primaryMonitor, &monitorPhysicalWidth, &monitorPhysicalHeight);
-    // LINFO("{}", tmonitorinfo);
+    LINFO("{}", tmonitorinfo);
 
     glfwSetWindowUserPointer(window, this);
     glfwShowWindow(window);
     glfwMakeContextCurrent(window);
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { throw std::runtime_error("Failed to initialize GLAD"); }
     glfwSwapInterval(1);
-    // LINFO("Monitor:\"{}\", Phys:{}x{}mm, Scale:({}/{}), Pos:({}/{})", glfwGetMonitorName(primaryMonitor), monitorPhysicalWidth,
-    //       monitorPhysicalHeight, xScale, yScale, xPos, yPos);
-    // LINFO("Monitor Mode:{}", formatMode(mode));
-    // LINFO("Created the window {0}: (w: {1}, h: {2}, pos:({3}/{4}))", windowName.data(), width, height, centerX, centerY);
+    LINFO("Monitor:\"{}\", Phys:{}x{}mm, Scale:({}/{}), Pos:({}/{})", glfwGetMonitorName(primaryMonitor), monitorPhysicalWidth,
+           monitorPhysicalHeight, xScale, yScale, xPos, yPos);
+    LINFO("Monitor Mode:{}", formatMode(mode));
+    LINFO("Created the window {0}: (w: {1}, h: {2}, pos:({3}/{4}))", windowName.data(), width, height, centerX, centerY);
 }

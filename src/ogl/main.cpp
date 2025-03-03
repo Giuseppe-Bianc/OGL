@@ -11,15 +11,11 @@
 #include <CLI/CLI.hpp>
 #include <spdlog/spdlog.h>
 
-// This file will be generated automatically when cur_you run the CMake
-// configuration step. It creates a namespace called `OGL`. You can modify
-// the source template at `configured_files/config.hpp.in`.
-#include "App.hpp"
-
-#include <internal_use_only/config.hpp>
+#include "OGL/ogl_lib.hpp"
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, const char **argv) {
+    INIT_LOG()
     try {
         CLI::App app{fmt::format("{} version {}", OGL::cmake::project_name, OGL::cmake::project_version)};
         bool show_version = false;
@@ -31,7 +27,7 @@ int main(int argc, const char **argv) {
             fmt::print("{}\n", OGL::cmake::project_version);
             return EXIT_SUCCESS;
         }
-        fmt::print("{}", glfwGetVersionString());
+        LINFO("{}", glfwGetVersionString());
         App rapp;
         rapp.run();
         return EXIT_SUCCESS;

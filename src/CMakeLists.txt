@@ -1,3 +1,4 @@
+add_subdirectory(glad)
+add_subdirectory(ogl_lib_core)
 add_subdirectory(ogl_lib)
 add_subdirectory(ogl)
-add_subdirectory(glad)
