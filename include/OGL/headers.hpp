@@ -10,4 +10,7 @@
 #include "GLFW/glfw3.h"
 #include <glad/glad/glad.h>
 
+[[nodiscard]] static constexpr auto calcolaCentro(const int &width, const int &w) noexcept { return (width - w) / 2; }
+#define CALC_CENTRO(width, w) calcolaCentro(width, w)
+
 // NOLINTEND(*-include-cleaner)

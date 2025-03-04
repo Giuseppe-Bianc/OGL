@@ -1,11 +1,31 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
+#include <catch2/matchers/catch_matchers_container_properties.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
+#include <future>
 
-#include <OGL/ogl_lib.hpp>
+#include "testsConstanst.hpp"
 
-TEST_CASE("Factorials are computed", "[factorial]") {
-    REQUIRE(factorial(0) == 1);
-    REQUIRE(factorial(1) == 1);
-    REQUIRE(factorial(2) == 2);
-    REQUIRE(factorial(3) == 6);
-    REQUIRE(factorial(10) == 3628800);
+using namespace std::literals::string_view_literals;
+
+using Catch::Matchers::ContainsSubstring;
+using Catch::Matchers::EndsWith;
+using Catch::Matchers::Message;
+using Catch::Matchers::MessageMatches;
+using Catch::Matchers::StartsWith;
+//  using Catch::Matchers::SizeIs;
+//  using Catch::Matchers::Equals;
+
+#define REQ_FORMAT(type, string) REQUIRE(FORMAT("{}", type) == (string));
+#define REQ_FORMAT_COMPTOK(type, string) REQUIRE(FORMAT("{}", comp_tokType(type)) == (string));
+#define MSG_FORMAT(...) Message(FORMAT(__VA_ARGS__))
+
+TEST_CASE("Logger setup", "[setup_logger]") {
+    SECTION("Default setup") { REQUIRE_NOTHROW(setup_logger()); }
+    SECTION("Logger sinks") {
+        setup_logger();
+        auto logger = spdlog::default_logger();
+        REQUIRE(logger->sinks().size() == 1);
+    }
 }

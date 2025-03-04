@@ -2,10 +2,8 @@
  * Created by gbian on 03/03/2025.
  * Copyright (c) 2025 All rights reserved.
  */
-
+// NOLINTBEGIN(*-include-cleaner)
 #include "OGL/Window.hpp"
-[[nodiscard]] static constexpr auto calcolaCentro(const int &width, const int &w) noexcept { return (width - w) / 2; }
-#define CALC_CENTRO(width, w) calcolaCentro(width, w)
 
 void errorCallback(int error, const char *description) { LINFO("GLFW Error ({0}): {1}", error, description); }
 
@@ -21,6 +19,13 @@ void keyCallback(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int
         // Handle other keys here
         break;
     }
+}
+
+void framebuffer_size_callback([[maybe_unused]] GLFWwindow* window, int width, int height) {
+    // make sure the viewport matches the new window dimensions; note that width and
+    // height will be significantly larger than specified on retina displays.
+    //LINFO("Framebuffer resized to: (w: {0}, h: {1})", width, height);
+    glViewport(0, 0, width, height);
 }
 
 Window::Window(const int w, const int h, const std::string_view &window_name) noexcept : width(w), height(h), windowName(window_name) {
@@ -58,6 +63,9 @@ void Window::setHints() const {
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
     // glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 }
 
 void Window::initializeGLFW() {
@@ -119,8 +127,11 @@ void Window::centerWindow() {
     glfwMakeContextCurrent(window);
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { throw std::runtime_error("Failed to initialize GLAD"); }
     glfwSwapInterval(1);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     LINFO("Monitor:\"{}\", Phys:{}x{}mm, Scale:({}/{}), Pos:({}/{})", glfwGetMonitorName(primaryMonitor), monitorPhysicalWidth,
            monitorPhysicalHeight, xScale, yScale, xPos, yPos);
     LINFO("Monitor Mode:{}", formatMode(mode));
     LINFO("Created the window {0}: (w: {1}, h: {2}, pos:({3}/{4}))", windowName.data(), width, height, centerX, centerY);
 }
+
+// NOLINTEND(*-include-cleaner)

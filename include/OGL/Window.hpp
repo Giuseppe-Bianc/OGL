@@ -11,6 +11,7 @@
 
 static void errorCallback(int error, const char *description);
 static void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 // static void framebufferResizeCallback(GLFWwindow *window, int width, int height) noexcept;
 class Window {  // NOLINT(*-special-member-functions)
 public:
