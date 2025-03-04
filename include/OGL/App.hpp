@@ -4,12 +4,12 @@
  */
 // NOLINTBEGIN(*-include-cleaner)
 #pragma once
-#include "Window.hpp"
+#include "EBO.hpp"
 #include "FPSCounter.hpp"
 #include "Shader.hpp"
 #include "VAO.hpp"
 #include "VBO.hpp"
-#include "EBO.hpp"
+#include "Window.hpp"
 
 class App {
 public:
