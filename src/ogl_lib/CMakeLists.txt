@@ -18,6 +18,8 @@ add_library(ogl_lib ogl_lib.cpp
         ../../include/OGL/VAO.hpp
         EBO.cpp
         ../../include/OGL/EBO.hpp
+        ../../include/OGL/Texture.cpp
+        ../../include/OGL/Texture.hpp
 )
 
 add_library(OGL::ogl_lib ALIAS ogl_lib)
@@ -34,6 +36,7 @@ target_link_libraries(ogl_lib
         OGL_warnings
         PUBLIC
         OGL::ogl_lib_core
+        OGL::stb
         OGL::glad
         OpenGL::GL
         glfw

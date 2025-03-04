@@ -14,21 +14,22 @@
 #include "OGL/ogl_lib.hpp"
 
 // Vertices coordinates
-GLfloat vertices[] = {
-    //               COORDINATES                  /     COLORS           //
-    -0.5f,  -0.5f * float(treesqrt) * 1 / 3, 0.0f, 0.8f, 0.3f,  0.02f,  // Lower left corner
-    0.5f,   -0.5f * float(treesqrt) * 1 / 3, 0.0f, 0.8f, 0.3f,  0.02f,  // Lower right corner
-    0.0f,   0.5f * float(treesqrt) * 2 / 3,  0.0f, 1.0f, 0.6f,  0.32f,  // Upper corner
-    -0.25f, 0.5f * float(treesqrt) * 1 / 6,  0.0f, 0.9f, 0.45f, 0.17f,  // Inner left
-    0.25f,  0.5f * float(treesqrt) * 1 / 6,  0.0f, 0.9f, 0.45f, 0.17f,  // Inner right
-    0.0f,   -0.5f * float(treesqrt) * 1 / 3, 0.0f, 0.8f, 0.3f,  0.02f   // Inner down
+GLfloat vertices[] =
+{ //     COORDINATES     /        COLORS      /   TexCoord  //
+    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
+     0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
+     0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
 };
+
 // Indices for vertices order
-GLuint indices[] = {
-    0, 3, 5,  // Lower left triangle
-    3, 2, 4,  // Upper triangle
-    5, 4, 1   // Lower right triangle
+GLuint indices[] =
+{
+    0, 2, 1, // Upper triangle
+    0, 3, 2 // Lower triangle
 };
+
+
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, const char **argv) {
@@ -47,8 +48,8 @@ int main(int argc, const char **argv) {
         LINFO("{}", glfwGetVersionString());
         Window lveWindow{wwidth, wheight, wtile};
         // Generates Shader object using shaders defualt.vert and default.frag
-        auto vertp = calculateRelativePathToSrcShaders(curentP, "default.vert");
-        auto fragp = calculateRelativePathToSrcShaders(curentP, "default.frag");
+        auto vertp = calculateRelativePathToShaders(curentP, "default.vert");
+        auto fragp = calculateRelativePathToShaders(curentP, "default.frag");
         // LINFO("Vertex shader path: {}", fs::canonical(vertp));
         // LINFO("Fragment shader path: {}", fs::canonical(fragp));
         Shader shaderProgram(fs::canonical(vertp).string().c_str(), fs::canonical(fragp).string().c_str());
@@ -61,16 +62,22 @@ int main(int argc, const char **argv) {
         VBO VBO1(vertices, sizeof(vertices));
         // Generates Element Buffer Object and links it to indices
         EBO EBO1(indices, sizeof(indices));
-
         // Links VBO to VAO
-        VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void *)0);
-        VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+        VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void *)0);
+        VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void *)(3 * TypeSizes::sizeOfFloat));
+        VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void*)(6 * TypeSizes::sizeOfFloat));
         // Unbind all to prevent accidentally modifying them
         VAO1.Unbind();
         VBO1.Unbind();
         EBO1.Unbind();
 
         GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+        auto pop_catp = calculateRelativePathToTextures(curentP, "pop_cat.png");
+        LINFO("Texture path: {}", fs::canonical(pop_catp));
+        // Texture
+        Texture popCat(fs::canonical(pop_catp).string().c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+        popCat.texUnit(shaderProgram, "tex0", 0);
+
 
         // Main while loop
         FPSCounter fpsCounter{lveWindow.getGLFWWindow(), wtile};
@@ -83,10 +90,11 @@ int main(int argc, const char **argv) {
             // Tell OpenGL which Shader Program we want to use
             shaderProgram.Activate();
             glUniform1f(uniID, 0.5f);
+            popCat.Bind();
             // Bind the VAO so OpenGL knows to use it
             VAO1.Bind();
             // Draw primitives, number of indices, datatype of indices, index of indices
-            glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             // Swap the back buffer with the front buffer
             lveWindow.swapBuffers();
             // Take care of all GLFW events
@@ -97,10 +105,12 @@ int main(int argc, const char **argv) {
         VAO1.Delete();
         VBO1.Delete();
         EBO1.Delete();
+        popCat.Delete();
+        shaderProgram.Delete();
         shaderProgram.Delete();
         return EXIT_SUCCESS;
 
-    } catch(const std::exception &e) { spdlog::error("Unhandled exception in main: {}", e.what()); }
+    } catch(const std::exception &e) { LERROR("Unhandled exception in main: {}", e.what()); }
 }
 
 // clang-format off

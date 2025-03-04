@@ -10,6 +10,7 @@
 #include "VAO.hpp"
 #include "VBO.hpp"
 #include "Window.hpp"
+#include "Texture.hpp"
 
 class App {
 public:

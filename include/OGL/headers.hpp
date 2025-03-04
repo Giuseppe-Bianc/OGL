@@ -9,6 +9,7 @@
 #define GLFW_INCLUDE_NONE
 #include "GLFW/glfw3.h"
 #include <glad/glad/glad.h>
+#include <stb/stb_image.hpp>
 
 static inline constexpr std::string_view wtile = OGL::cmake::project_name;
 static inline constexpr std::size_t factor = 80;
@@ -39,8 +40,11 @@ inline fs::path calculateRelativePathToSrc(const fs::path &executablePath, const
     return relativePath.lexically_normal();
 }
 
-inline fs::path calculateRelativePathToSrcShaders(const fs::path &executablePath, const fs::path &targetFile) {
+inline fs::path calculateRelativePathToShaders(const fs::path &executablePath, const fs::path &targetFile) {
     return calculateRelativePathToSrc(executablePath, targetFile, "shaders");
+}
+inline fs::path calculateRelativePathToTextures(const fs::path &executablePath, const fs::path &targetFile) {
+    return calculateRelativePathToSrc(executablePath, targetFile, "textures");
 }
 
 // NOLINTEND(*-include-cleaner)
