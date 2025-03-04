@@ -8,6 +8,16 @@ add_library(ogl_lib ogl_lib.cpp
         ../../include/OGL/Window.hpp
         App.cpp
         ../../include/OGL/App.hpp
+        FPSCounter.cpp
+        ../../include/OGL/FPSCounter.hpp
+        Shader.cpp
+        ../../include/OGL/Shader.hpp
+        VBO.cpp
+        ../../include/OGL/VBO.hpp
+        VAO.cpp
+        ../../include/OGL/VAO.hpp
+        EBO.cpp
+        ../../include/OGL/EBO.hpp
 )
 
 add_library(OGL::ogl_lib ALIAS ogl_lib)

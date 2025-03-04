@@ -126,7 +126,7 @@ void Window::centerWindow() {
     glfwShowWindow(window);
     glfwMakeContextCurrent(window);
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { throw std::runtime_error("Failed to initialize GLAD"); }
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     LINFO("Monitor:\"{}\", Phys:{}x{}mm, Scale:({}/{}), Pos:({}/{})", glfwGetMonitorName(primaryMonitor), monitorPhysicalWidth,
           monitorPhysicalHeight, xScale, yScale, xPos, yPos);
