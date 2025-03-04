@@ -71,23 +71,29 @@ void Shader::Delete() { glDeleteProgram(ID); }
 
 // Checks if the different Shaders have compiled properly
 void Shader::compileErrors(unsigned int shader, const char *type) {
+    GLint maxLength = 0;
     // Stores status of compilation
     GLint hasCompiled;
     // Character array to store error message in
-    char infoLog[1024];
     if(strcmp(type, "PROGRAM") != 0) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
         if(hasCompiled == GL_FALSE) {
-            glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> infoLog(maxLength);
+            glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
             LCRITICAL("SHADER_COMPILATION_ERROR for: {}", type);
-            LCRITICAL("{}", infoLog);
+            std::string s(infoLog.begin(), infoLog.end());
+            LCRITICAL("{}", s);
         }
     } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
         if(hasCompiled == GL_FALSE) {
-            glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
+            glGetProgramiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> infoLog(maxLength);
+            glGetProgramInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
             LCRITICAL("SHADER_LINKING_ERROR for: {}", type);
-            LCRITICAL("{}", infoLog);
+            std::string s(infoLog.begin(), infoLog.end());
+            LCRITICAL("{}", s);
         }
     }
 }
