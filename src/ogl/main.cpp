@@ -14,22 +14,19 @@
 #include "OGL/ogl_lib.hpp"
 
 // Vertices coordinates
-GLfloat vertices[] =
-{ //     COORDINATES     /        COLORS      /   TexCoord  //
-    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
-     0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
-     0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
+GLfloat vertices[] = {
+    //     COORDINATES     /        COLORS      /   TexCoord  //
+    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Lower left corner
+    -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,  // Upper left corner
+    0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,  // Upper right corner
+    0.5f,  -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f   // Lower right corner
 };
 
 // Indices for vertices order
-GLuint indices[] =
-{
-    0, 2, 1, // Upper triangle
-    0, 3, 2 // Lower triangle
+GLuint indices[] = {
+    0, 2, 1,  // Upper triangle
+    0, 3, 2   // Lower triangle
 };
-
-
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, const char **argv) {
@@ -65,7 +62,7 @@ int main(int argc, const char **argv) {
         // Links VBO to VAO
         VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void *)0);
         VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void *)(3 * TypeSizes::sizeOfFloat));
-        VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void*)(6 * TypeSizes::sizeOfFloat));
+        VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * TypeSizes::sizeOfFloat, (void *)(6 * TypeSizes::sizeOfFloat));
         // Unbind all to prevent accidentally modifying them
         VAO1.Unbind();
         VBO1.Unbind();
@@ -77,7 +74,6 @@ int main(int argc, const char **argv) {
         // Texture
         Texture popCat(fs::canonical(pop_catp).string().c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
         popCat.texUnit(shaderProgram, "tex0", 0);
-
 
         // Main while loop
         FPSCounter fpsCounter{lveWindow.getGLFWWindow(), wtile};
