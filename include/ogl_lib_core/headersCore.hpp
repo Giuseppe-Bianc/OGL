@@ -57,10 +57,10 @@ DISABLE_WARNINGS_PUSH(
 #include "cast/casts.hpp"
 #include "glm_matld.hpp"
 #include "glm_prety_string_cast.hpp"
-//#include "move.hpp"
-// This file will be generated automatically when cur_you run the CMake
-// configuration step. It creates a namespace called `Vandior`. You can modify
-// the source template at `configured_files/config.hpp.in`.
+// #include "move.hpp"
+//  This file will be generated automatically when cur_you run the CMake
+//  configuration step. It creates a namespace called `Vandior`. You can modify
+//  the source template at `configured_files/config.hpp.in`.
 #include <internal_use_only/config.hpp>
 // Restore warning levels.
 DISABLE_WARNINGS_POP()
@@ -255,14 +255,14 @@ template <std::integral T> [[nodiscard]] constexpr auto find_divisors(T num) noe
 
 /**
  * @brief Specialization of fmt::formatter for glm::vec.
-*/
+ */
 template <typename T, glm::length_t L, glm::qualifier Q> struct fmt::formatter<glm::vec<L, T, Q>> : formatter<std::string_view> {
     /**
      * @brief Format function for glm::vec.
      * @param vector The vector to be formatted.
      * @param ctx The format context.
      * @return The formatted string.
-    */
+     */
     auto format(const glm::vec<L, T, Q> &vector, format_context &ctx) const -> format_context::iterator {
         return formatter<std::string_view>::format(glmp::to_string(vector), ctx);
     }
@@ -278,7 +278,7 @@ struct fmt::formatter<glm::mat<C, R, T, Q>> : formatter<std::string_view> {
      * @param matrix The matrix to be formatted.
      * @param ctx The format context.
      * @return The formatted string.
-    */
+     */
     auto format(const glm::mat<C, R, T, Q> &matrix, format_context &ctx) const -> format_context::iterator {
         return formatter<std::string_view>::format(glmp::to_string(matrix), ctx);
     }
@@ -286,7 +286,7 @@ struct fmt::formatter<glm::mat<C, R, T, Q>> : formatter<std::string_view> {
 
 /**
  * @brief Specialization of fmt::formatter for glm::qua.
-*/
+ */
 template <typename T, glm::qualifier Q> struct fmt::formatter<glm::qua<T, Q>> : formatter<std::string_view> {
     /**
      * @brief Format function for glm::qua.

@@ -79,7 +79,7 @@ void Window::initializeGLFW() {
 
 std::string Window::formatMode(const GLFWvidmode *mode) const {
     return FORMAT("({}x{}, Bits rgb{}{}{}, RR:{}Hz)", mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits,
-                       mode->refreshRate);
+                  mode->refreshRate);
 }
 
 void Window::centerWindow() {
@@ -129,7 +129,7 @@ void Window::centerWindow() {
     glfwSwapInterval(1);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     LINFO("Monitor:\"{}\", Phys:{}x{}mm, Scale:({}/{}), Pos:({}/{})", glfwGetMonitorName(primaryMonitor), monitorPhysicalWidth,
-           monitorPhysicalHeight, xScale, yScale, xPos, yPos);
+          monitorPhysicalHeight, xScale, yScale, xPos, yPos);
     LINFO("Monitor Mode:{}", formatMode(mode));
     LINFO("Created the window {0}: (w: {1}, h: {2}, pos:({3}/{4}))", windowName.data(), width, height, centerX, centerY);
 }
