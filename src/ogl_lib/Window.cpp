@@ -21,10 +21,10 @@ void keyCallback(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int
     }
 }
 
-void framebuffer_size_callback([[maybe_unused]] GLFWwindow* window, int width, int height) {
+void framebuffer_size_callback([[maybe_unused]] GLFWwindow *window, int width, int height) {
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
-    //LINFO("Framebuffer resized to: (w: {0}, h: {1})", width, height);
+    // LINFO("Framebuffer resized to: (w: {0}, h: {1})", width, height);
     glViewport(0, 0, width, height);
 }
 
